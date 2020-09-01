@@ -1,0 +1,141 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS JS Compressed files -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/hospital-admin.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/hospital-admin3.css">
+
+    <!-- Custom fonts for this project-->
+    <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Font Awesome Icon repository -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+    <style type="text/css" media="screen">
+        .dropdown-item:hover {
+            color: darkblue;
+        }
+
+        .Page-Action-body {
+            color: black;
+        }
+    </style>
+
+    <title></title>
+
+</head>
+<body>
+    <div class="container-fluid main-layer-topmost">
+
+        <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar p-0">
+            <a class="navbar-brand" href="Index">
+                <img class="img-rounded rounded-circle mr-2" width="40" height="40" src="~/Content/images/hospital-logo.jpg" alt="Hospital logo">
+                <span class="text-uppercase font-weight-normal hospital-name-header-color mt-3 text-white" style="font-size: 0.9rem;">Faith-Hills Specialist Hospital Limited</span>
+            </a>
+            <span id="Department">Department & Unit </span>
+            <span class="text-uppercase font-weight-normal hospital-name-header-color" style="font-size: 0.9rem; margin-left:15rem;"></span><span id="display-username" class="text-white" style="display:inline-flex; opacity:0.5;"> ofoetan olusola Temitayo</span>
+
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item dropdown  dropdown-toggle-split">
+                        <a class="nav-link" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                            <img class="img-rounded rounded-circle mr-4 mt-1  nav-item" role="presentation" width="35" height="35" src="~/Content/images/default-user-profile-pic.jpg" alt="User Picture">
+
+                        </a>
+                        <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="navbarDropdown1">
+                            <a class="dropdown-item" href="Login">Logout<span class="fa fa-sign-in-alt ml-1" aria-hidden="true"></span></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Support</a>
+
+
+                        </div>
+
+
+                </ul>
+            </div>
+        </header>
+    </div>
+
+
+
+    @RenderBody()
+
+    <div>
+
+        <!-- Footer -->
+        <footer class="page-footer font-small unique-color-dark text-white footindex position-absolute fixed-bottom">
+
+            <div style="background-color: grey;">
+                <div class="container">
+
+                    <!-- Grid row-->
+                    <div class="row py-4 d-flex align-items-center">
+
+                        <!-- Grid column -->
+                        @*Renders contents of footer in the first layer*@
+
+                        @* @Html.Partial("_FooterFirstLayerContents")*@
+
+                        <!-- Grid column -->
+
+                    </div>
+                    <!-- Grid row-->
+
+                </div>
+            </div>
+
+
+            <!-- Footer Links -->
+            <!-- Copyright -->
+            <div class="footer-copyright text-center py-3">
+                @*Renders Footer Copyright Content*@
+
+                @* @Html.Partial("_FooterCopyRightContent")*@
+                <div class="mb-4">
+                    © 2020 Copyright:
+                    <em> Faith-Hills Specialist Hospital Limited</em>
+                </div>
+            </div>
+            <!-- Copyright -->
+
+        </footer>
+        <!-- Footer -->
+    </div>
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- js jQuery compressed files -->
+    <script src="~/Content/js/jquery.min.js" type="text/javascript"></script>
+    <!-- Popper compressed files -->
+    <script src="~/Content/js/popper.min.js" type="text/javascript"></script>
+    <!-- js Bootstrap -->
+    <script src="~/Content/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--Custom javascript files-->
+    <script src="~/Content/js/angular.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/hospital-admin.js" type="text/javascript"></script>
+    <script src="~/Content/js/hospital-admin2.js" type="text/javascript"></script>
+
+</body>
+</html>

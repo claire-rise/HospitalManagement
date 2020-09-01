@@ -1,0 +1,170 @@
+
+
+.bg-gradient-primary {
+  background-color: rgba(  3, 52, 93 , 0.7); ;
+  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  background-size: cover;
+  }
+
+body.body-login, .mynewlogin-mode{
+  background-image: url("../images/snap1.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 110% 110%;           
+  }
+
+
+
+.bg1 {
+
+  background-image: url("../images/bg-image01.jpg");
+  background-repeat: repeat-y;
+  background-attachment: fixed;
+  width: 16rem;
+  height: 700px;
+  position: relative;
+    }
+
+
+ hr{
+
+  background-color: #ffff;
+  opacity: 0.2;
+    }
+
+
+
+.login-frame {
+              
+  background-color: rgba( 6, 40, 68 ,0.075); 
+  width: 300px;
+  height: 450px;
+  text-align: justify;
+  border-radius: 15px;
+  margin-top: 150px;
+  position: relative;
+  padding: 50px;
+  cursor: pointer;
+  font-size: 1.3em;
+  opacity: 1;
+  }
+
+.txt-email, .txt-password {
+           
+  background-color: lightgrey;
+  opacity: 0.6;
+  }
+
+
+.btn-google {
+  color: #fff;
+  background-color: #ea4335;
+  border-color: #fff;
+  border-radius: 15px;
+}
+
+.btn-google:hover {
+  color: #fff;
+  background-color: #e12717;
+  border-color: #e6e6e6;
+}
+
+.btn-google:focus, .btn-google.focus {
+  color: #fff;
+  background-color: #e12717;
+  border-color: #e6e6e6;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+}
+
+.btn-google.disabled, .btn-google:disabled {
+  color: #fff;
+  background-color: #ea4335;
+  border-color: #fff;
+}
+
+.btn-google:not(:disabled):not(.disabled):active, .btn-google:not(:disabled):not(.disabled).active,
+.show > .btn-google.dropdown-toggle {
+  color: #fff;
+  background-color: #d62516;
+  border-color: #dfdfdf;
+}
+
+.btn-google:not(:disabled):not(.disabled):active:focus, .btn-google:not(:disabled):not(.disabled).active:focus,
+.show > .btn-google.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+}
+
+.btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border-color: #fff;
+  border-radius: 15px;
+}
+
+.btn-facebook:hover {
+  color: #fff;
+  background-color: #30497c;
+  border-color: #e6e6e6;
+}
+
+.btn-facebook:focus, .btn-facebook.focus {
+  color: #fff;
+  background-color: #30497c;
+  border-color: #e6e6e6;
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+}
+
+.btn-facebook.disabled, .btn-facebook:disabled {
+  color: #fff;
+  background-color: #3b5998;
+  border-color: #fff;
+}
+
+.btn-facebook:not(:disabled):not(.disabled):active, .btn-facebook:not(:disabled):not(.disabled).active,
+.show > .btn-facebook.dropdown-toggle {
+  color: #fff;
+  background-color: #2d4373;
+  border-color: #dfdfdf;
+}
+
+.btn-facebook:not(:disabled):not(.disabled):active:focus, .btn-facebook:not(:disabled):not(.disabled).active:focus,
+.show > .btn-facebook.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+}
+
+
+
+    .main-layer-topmost {
+      background-color:  rgba( 26, 63, 124 , 0.9);
+
+      } 
+
+      
+    .hospital-name-header-color {
+          color: #1a3f7c;
+          }
+
+
+      footer.footindex {
+         /*background-color:  #6351ce;*/
+         /*background-color:  rgba( 26, 63, 124 , 1);*/
+         background-color:   #1a3f7c;
+        }
+
+
+        .navbar .nav-item:not(:last-child) {
+            margin-right: 35px;
+              }
+ 
+        .dropdown-toggle::after {
+          transition: transform 0.15s linear; 
+            }
+ 
+        .show.dropdown .dropdown-toggle::after {
+          transform: translateY(3px);
+            }
+    
+        .dropdown-menu {
+          margin-top: 0;
+            }
+      

@@ -10,20 +10,33 @@ namespace hospitalwebapp.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.Title = "Home";
             return View();
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Title = "About us";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Title = "Our contact";
 
+            return View();
+        }
+
+        public ActionResult Login()
+        {
+            ViewBag.Title = "Login";
+            return View();
+        }
+
+        public ActionResult ForgotPassword()
+        {
+            ViewBag.Title = "Forgot Password";
             return View();
         }
     }

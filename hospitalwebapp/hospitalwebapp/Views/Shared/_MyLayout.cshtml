@@ -1,0 +1,370 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS JS Compressed files -->
+    <link rel="stylesheet" type="text/css" href="~/Content/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/hospital-admin.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/css/hospital-admin3.css">
+
+    <!-- Custom fonts for this project-->
+    <!-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Font Awesome Icon repository -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+    <style type="text/css" media="screen">
+        .dropdown-item:hover {
+            color: darkblue;
+        }
+
+           
+        
+
+    </style>
+
+    <title></title>
+</head>
+<body>
+
+    <div class="container-fluid p-0 col-xs-12 col-sm-12 col-md-12">
+
+        <!-- Page Header -->
+        <div class="container-fluid main-layer-topmost text-white col-xs-12 col-sm-12 col-md-12">
+
+            @Html.Partial("_TopLayerBarLink")
+            <!-- Page Header -->
+
+        </div>
+
+        <!-- NavBar Section -->
+
+        <nav class="navbar navbar-expand-lg navbar-dark text-primary" style="background-color: lightgrey;">
+
+            @*Renders Top NavBar Second Layer Partial View Here*@
+
+            @Html.Partial("_TopNavBarSecondLayer")
+
+        </nav>      <!-- End of NavBar -->
+
+    </div>  <!-- Container Section closes here-->
+    <!-- Main Body Section -->
+
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer class="page-footer font-small unique-color-dark text-white footindex">
+
+        <div style="background-color: grey;">
+            <div class="container">
+
+                <!-- Grid row-->
+                <div class="row py-4 d-flex align-items-center">
+
+                    <!-- Grid column -->
+                    @*Renders contents of footer in the first layer*@
+
+                    @Html.Partial("_FooterFirstLayerContents")
+
+                    <!-- Grid column -->
+
+                </div>
+                <!-- Grid row-->
+
+            </div>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="container-fluid text-center text-md-left mt-5">
+
+            <!-- Grid row -->
+            <div class="row mt-3">
+
+                <!-- Grid column -->
+                @*Renders Footer Second Layer Contents here as Partial View*@
+
+                @Html.Partial("_FooterSecondLayerContents")
+
+
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+
+
+        <!-- Footer Links -->
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">
+            @*Renders Footer Copyright Content*@
+
+            @Html.Partial("_FooterCopyRightContent")
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+    <!-- The Modal -->
+    <section class="row">
+
+        <form action="" method="post" class="modal fade form-group font-weight-normal" id="userRegisterModal" style="color:black">
+
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title">User Registration</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body" style="font-size: 0.75em; background-color: lightgrey;">
+
+                        <!-- Form Elements Here-->
+
+                        <div class="container-fluid row mx-auto">
+
+
+                            <div class="col-8" style="background-color: lightgrey;">
+
+                                <!-- User type -->
+                                <div class="form-group col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                                    <label for="Utype">Select User:</label>
+                                    <select class="form-control" id="Utype">
+                                        <option value="Admin" selected="">Admin</option>
+                                        <option value="Patient">Patient</option>
+                                        <option value="Doctor">Doctor</option>
+                                        <option value="Nurse">Nurse</option>
+                                        <option value="Reception">Reception</option>
+                                        <option value="Pharmacy">Pharmacy</option>
+                                    </select>
+                                </div>
+
+
+                                <!-- Authenticate password -->
+
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                                    <label for="Authorized-username">Authorized:</label>
+                                    <input type="text" class="form-control" id="Authorized-username" placeholder="Authorized username" required="" autofocus="">
+                                </div>
+
+
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <label for="passkey">Pass Key:</label>
+                                    <input type="password" class="form-control" id="passkey" placeholder="Pass key" required="">
+                                </div>
+
+
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <label for="user-id" id="user-id-label">User Id:</label>
+                                    <input type="text" class="form-control" id="user-id" placeholder="Enter user Id" required="">
+                                </div>
+
+
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <label for="lastname">Last name:</label>
+                                    <input type="text" class="form-control" id="lastname" placeholder="Enter last name" required="">
+                                </div>
+
+
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <label for="othernames">Other names:</label>
+                                    <input type="text" class="form-control" id="firstname" placeholder="Enter other names" required="">
+                                </div>
+
+
+                                <!-- Email address textbox -->
+                                <div class="input-group col-xs-10 col-sm-10 col-md-10 col-lg-10 mb-4 mt-5">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                                    </div>
+                                    <input type="email" class="form-control form-control-user" id="login-email" aria-describedby="emailHelp" placeholder="Email address">
+                                </div>
+
+
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <label for="password">Password:</label>
+                                    <input type="password" class="form-control" id="password" placeholder="Password" required="">
+                                </div>
+
+
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <!-- Date input -->
+                                    <label class="control-label" for="dob">Date of Birth</label>
+                                    <input class="form-control" id="dob" name="date" placeholder="MM/DD/YYYY" type="text" maxlength="10" />
+                                </div>
+
+
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <label for="age">Age:</label>
+                                    <input type="text" class="form-control" id="age" placeholder="Enter Age" required="">
+                                </div>
+
+                                <!-- Gender Div -->
+                                <div class="form-group col-xs-12 col-sm-12 col-md-10 col-lg-10 mt-1">
+                                    <label for="genderTag">Gender:</label><br>
+
+                                    <div class="form-check-inline col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                        <input type="radio" class="form-check-input mb-2 mr-2" id="male" name="gender" value="male" required="">
+                                        <label for="male">Male</label><br>
+                                    </div>
+
+                                    <div class="form-check-inline col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                        <input type="radio" class="form-check-input mb-2 mr-2" id="female" name="gender" value="female" required="">
+                                        <label for="female">Female</label><br>
+                                    </div>
+
+                                </div>  <!-- End of Gender Div -->
+                                <!-- Gender Div -->
+                                <div class="form-group col-xs-12 col-sm-12 col-md-10 col-lg-10 mt-1">
+                                    <label for="religionTag">Religion:</label><br>
+
+                                    <div class="form-check-inline col-xs-12 col-sm-12 col-md-4 col-lg-3 mr-5">
+                                        <input type="radio" class="form-check-input mb-2 mr-2" id="christianity" name="religion" value="christianity" required="">
+                                        <label for="christianity">Christianity</label><br>
+                                    </div>
+
+                                    <div class="form-check-inline col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                                        <input type="radio" class="form-check-input mb-2" id="islam" name="religion" value="islam" required="">
+                                        <label for="islam">Islam</label><br>
+                                    </div>
+
+
+                                    <div class="form-check-inline col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                                        <input type="radio" class="form-check-input mb-2" id="other" name="religion" value="other" required="">
+                                        <label for="other">Other</label><br>
+                                    </div>
+
+                                </div>  <!-- End of Gender Div -->
+                                <!-- Marital Status -->
+                                <div class="form-group col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                                    <label for="marital-status">Marital Staus:</label>
+                                    <select class="form-control" id="marital-status">
+                                        <option value="Single" selected="">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Divorced">Divorced</option>
+                                    </select>
+                                </div>
+
+                                <!-- Occupation -->
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <label for="occupation">Occupation:</label>
+                                    <input type="text" class="form-control" id="occupation" placeholder="Occupation" required="">
+                                </div>
+
+                                <!-- Home Address -->
+                                <div class="input-group col-xs-10 col-sm-10 col-md-10 col-lg-10 mb-4 mt-5">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-home"></i></span>
+                                    </div>
+                                    <input type="text" id="address" name="address" class="form-control" placeholder="Home Address" required="">
+                                </div>
+
+                                <!-- Mobile Contact -->
+                                <div class="input-group col-xs-10 col-sm-10 col-md-10 col-lg-10 mb-2 mt-5">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" id="phone" name="phone" class="form-control" placeholder="222-222-2222" maxlength="12" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required="">
+                                </div>
+
+
+                                <!-- Next of Kin -->
+                                <div class="form-group col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                                    <label for="next-of-kin">Next-of-Kin:</label>
+                                    <input type="text" class="form-control" id="next-of-kin" placeholder="Next-of-Kin" required="">
+                                </div>
+
+
+
+                            </div>
+
+
+                            <!-- Body segment Two -->
+
+                            <div class="col-4" style="padding: 10px; background-color: lightgrey; width: 100%;">
+                                <!-- this is another section ....for picture  -->
+                                <!-- Image caption here -->
+                                <div class="img-fluid mx-auto row mt-4" style="width: 140px; height: 140px; background-color: white; padding: 2px;">
+                                    <img src="" id="preview" class="img-fluid" alt="" style="width: 100%; height: 100%; border-width: 5px;">
+
+                                </div>
+
+                                <br><br>
+
+                                <div>
+
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input browse" id="myfile" accept="images/*" name="img[]">
+                                        <label class="custom-file-label" for="myfile"><span id="file">Choose file</span></label>
+                                    </div>
+
+                                    <!-- Binding the image stream file name to this paragraph -->
+                                    <p id="test"></p>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Submit Button -->
+
+                            <div class="container form-group mt-5 col-12" style="text-align: center;">
+                                <button type="submit" class="btn btn-primary" id="btn-submit">Submit</button>
+                            </div>
+
+
+                        </div>
+
+
+                    </div> <!--End of Modal Body-->
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div> -->
+
+                </div>
+
+
+            </div>
+
+
+
+        </form>
+
+    </section>
+
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- js jQuery compressed files -->
+    <script src="~/Content/js/jquery.min.js" type="text/javascript"></script>
+    <!-- Popper compressed files -->
+    <script src="~/Content/js/popper.min.js" type="text/javascript"></script>
+    <!-- js Bootstrap -->
+    <script src="~/Content/js/bootstrap.min.js" type="text/javascript"></script>
+    <!--Custom javascript files-->
+    <script src="~/Content/js/angular.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/hospital-admin.js" type="text/javascript"></script>
+    <script src="~/Content/js/hospital-admin2.js" type="text/javascript"></script>
+
+</body>
+</html>
