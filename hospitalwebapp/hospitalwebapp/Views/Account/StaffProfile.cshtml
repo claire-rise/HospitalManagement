@@ -1,0 +1,138 @@
+﻿@model hospitalwebapp.Models.StaffAccount
+
+@{
+    ViewBag.Title = "StaffProfile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<hr />
+<h1 class="font-weight-bold">Profile</h1>
+
+<br />
+<br />
+<br />
+
+
+<div class="container">
+
+
+    <dl class="dl-horizontal">
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.StaffGender)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StaffGender)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Profession)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profession)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.StaffDepartment)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StaffDepartment)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DateOfBirth)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </div>
+
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Phone)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Username)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Password)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Password)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.ConfirmPassword)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ConfirmPassword)
+            </dd>
+        </div>
+
+    </dl>
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.StaffId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>

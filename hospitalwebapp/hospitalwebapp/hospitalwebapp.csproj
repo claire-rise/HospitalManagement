@@ -5128,6 +5128,8 @@
     <Content Include="Views\Doctors\Edit.cshtml" />
     <Content Include="Views\Doctors\Index.cshtml" />
     <Content Include="Views\Account\AllPatients.cshtml" />
+    <Content Include="Views\Account\EditStaff.cshtml" />
+    <Content Include="Views\Account\StaffProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

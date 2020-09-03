@@ -1,15 +1,14 @@
-﻿@model hospitalwebapp.Models.PatientAccount
+﻿@model hospitalwebapp.Models.StaffAccount
 
 @{
-    ViewBag.Title = "PatientRegistration";
+    ViewBag.Title = "EditStaff";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+
+
 <hr />
-
-<h1 class="font-weight-bold">Patient Registration</h1>
-
-<br />
+<h1 class="font-weight-bold">Edit Staff</h1>
 <br />
 <br />
 
@@ -32,9 +31,12 @@
     {
         <div class="alert alert-danger">@ViewBag.Error</div>
     }
+
+    @Html.HiddenFor(model => model.StaffId)
+
+
     <div class="container" style="padding-left: 5rem;">
         <div class="formColor col-md-10" style="font-size:1.5rem;">
-
             <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
@@ -52,10 +54,10 @@
             </div>
 
             <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.PatientGender, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.LabelFor(model => model.StaffGender, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EnumDropDownListFor(model => model.PatientGender, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.PatientGender, "", new { @class = "text-danger" })
+                    @Html.EnumDropDownListFor(model => model.StaffGender, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StaffGender, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -68,10 +70,10 @@
             </div>
 
             <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                @Html.LabelFor(model => model.StaffDepartment, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    @Html.EnumDropDownListFor(model => model.StaffDepartment, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StaffDepartment, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -92,6 +94,14 @@
             </div>
 
             <div class="form-group col-md-12">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
                 @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
                     @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
@@ -104,14 +114,6 @@
                 <div class="col-md-8">
                     @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group col-md-12">
-                @Html.LabelFor(model => model.PatientRegistrationType, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EnumDropDownListFor(model => model.PatientRegistrationType, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.PatientRegistrationType, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -131,9 +133,9 @@
                 </div>
             </div>
 
-            <div class="form-group col-md-10">
+            <div class="form-group col-md-12">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-success" />
+                    <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </div>
         </div>
@@ -141,7 +143,7 @@
     </div>
         }
 
-<div>
-    @*@Html.ActionLink("Back to List", "Index")*@
-    <a href="Index" class="btn btn-info RedirectBack">Back to List</a>
-</div>
+        <div>
+            @* @Html.ActionLink("Back to List", "Index")*@
+            <a href="/Account/Index" class="btn btn-info RedirectBack">Back to List</a>
+        </div>

@@ -80,6 +80,7 @@
                             @if (Session["StaffId"] != null)
                             {
                                 <h2>@Session["Username"].ToString()</h2>
+                                var UserId = Session["StaffId"];
                             }
                             else
                             {
@@ -100,23 +101,32 @@
                                 <li>
                                     <a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="index.html" style="font-size: 1rem;">Dashboard</a></li>
-                                        <li><a href="index2.html" style="font-size: 1rem;">View Profile</a></li>
+                                        <li><a href="/Account/Index" style="font-size: 1rem;">Dashboard</a></li>
+                                        @if (Session["StaffId"] != null)
+                                        {
+
+                                            var UserId = Session["StaffId"];
+                                            <li><a href="/Account/StaffProfile/@UserId" style="font-size: 1rem;">View Profile</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="/Account/Index" style="font-size: 1rem;">View Profile</a></li> 
+                                        }
+                                        
                                     </ul>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="form.html" style="font-size: 1rem;">Register Patient</a></li>
-                                        <li><a href="form_advanced.html" style="font-size: 1rem;">Register Administrator</a></li>
-                                        <li><a href="/Employees/Create" style="font-size: 1rem;">Register Staff</a></li>
+                                        <li><a href="/Account/PatientRegistration" style="font-size: 1rem;">Register Patient</a></li>                                     
+                                        <li><a href="/Account/Registration" style="font-size: 1rem;">Register Staff</a></li>
 
                                     </ul>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-desktop"></i> Views <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li><a href="general_elements.html" style="font-size: 1rem;">All Staff</a></li>
+                                        <li><a href="/Account/Index" style="font-size: 1rem;">All Staff</a></li>
                                         <li><a href="general_elements.html" style="font-size: 1rem;">All Patients</a></li>
                                         <li><a href="media_gallery.html" style="font-size: 1rem;">Mailbox</a></li>
                                         <li><a href="typography.html" style="font-size: 1rem;">Feedback</a></li>
