@@ -1,17 +1,101 @@
-﻿@{
+﻿@model hospitalwebapp.Models.EmailModel
+
+@{
     ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div class="container-fluid" style="background-color: #eaeaea;padding-top: 3rem; padding-bottom:3rem;">
+    <div class="container">
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+        <h1 class="font-weight-bold" style="margin-left:5rem;color: #2A3F54; text-decoration:underline;">Contact Us</h1>
+        <div class="row">
+            <div class="col-md-6" style="margin-top:2rem;">
+                <h3 class="font-weight-bold" style="">Welcome to,<br /> <i>Faith-Hills Specialist Hospital Limited</i></h3>
+
+                <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+                <h5>
+                    <i class="fas fa-home mr-2"></i> 87 Alimosho Road, Alaguntan Bus Stop, Iyana Ipaja, Lagos
+                </h5>
+                <h5>
+                    <i class="fas fa-envelope mr-2"></i> faith-hills.hospital@gmail.com
+                </h5>
+                <h5>
+                    <i class="fas fa-phone mr-2"></i> +234 08098099034, 09063564740
+                </h5>
+                <h5>
+                    <i class="fas fa-print mr-2"></i> +234 1-8400042
+                </h5>
+            </div>
+
+
+            <div class="col-md-6" style="margin-top: 5rem;border: 2px solid lightgrey;box-shadow: 2px 2px #2A3F54; padding-top:3rem;">
+                @if (ViewBag.Feedback != null)
+                {
+                    <div class="alert alert-success col-md-12" style="margin-bottom:2rem;">@ViewBag.Feedback</div>
+                }
+
+                <h5 class="font-weight-bold" style="margin-left:5rem;color: #2A3F54; margin-bottom:1rem;">Please Fill the Form Below:</h5>
+
+
+
+                @using (Html.BeginForm("Contact", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control", placeholder = "Full name" } })
+                                @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.UserEmail, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-12">
+                                @Html.EditorFor(model => model.UserEmail, new { htmlAttributes = new { @class = "form-control", placeholder = "Email" } })
+                                @Html.ValidationMessageFor(model => model.UserEmail, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-7">
+                                @Html.TextAreaFor(model => model.Message, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.Label("Select File", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                <input type="file" name="UploadFile" id="UploadFile" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10" style="margin-left: 8rem; margin-bottom: 3rem; margin-top:2rem;">
+
+                                <input type="submit" value="Send" class="btn btn-success" style="width: 15rem; height:4rem; font-size: 1.5rem; border-radius:8px;" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    tinymce.init({
+        selector: 'textarea', width: 500, height: 300
+    })
+</script>
+

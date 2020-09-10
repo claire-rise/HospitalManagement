@@ -1,0 +1,142 @@
+﻿@model hospitalwebapp.Models.PatientAccount
+
+@{
+    ViewBag.Title = "PatientProfile";
+    Layout = "~/Views/Shared/_RegisteredPatientLayout.cshtml";
+}
+
+
+
+
+<style type="text/css">
+    .profile-header-color {
+        background-color: #2A3F54;
+        opacity: 0.7;
+        color: white;
+    }
+
+    .profile-color {
+        background-color: lightgrey;
+    }
+</style>
+
+<hr />
+<h1 class="font-weight-bold">Patient Profile</h1>
+
+<br />
+<br />
+<br />
+
+<div class="container" style="margin-bottom: 3rem;">
+
+    <div class="row table-striped">
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.FirstName)
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.LastName)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.LastName)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.PatientGender)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.PatientGender)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.Profession)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.Profession)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.Address)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.Address)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.DateOfBirth)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.Email)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.Phone)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.Phone)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.Username)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.Username)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.PatientRegistrationType)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.PatientRegistrationType)
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
+                @Html.DisplayNameFor(model => model.Password)
+            </div>
+            <div class="col-md-9 profile-color">
+                @Html.DisplayFor(model => model.Password)
+            </div>
+        </div>
+
+
+    </div>
+
+    <br />
+
+    <p>
+        @* @Html.ActionLink("Edit", "EditStaff", new { id = Model.StaffId }) |*@
+
+
+        @{
+            var UserId = Model.PatientId;
+            <a class="btn btn-info" href="/Patient/EditPatient/@UserId" style="margin-left:2rem;"><i class="fa fa-edit mr-2"></i>Manage Account</a>
+        }
+
+
+
+    </p>
+</div>
+

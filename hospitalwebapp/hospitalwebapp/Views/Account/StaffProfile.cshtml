@@ -5,6 +5,17 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<style type="text/css">
+    .profile-header-color {
+        background-color: #2A3F54;
+        opacity: 0.7;
+        color:white;
+    }
+    .profile-color {
+        
+        background-color: lightgrey;
+    }
+</style>
 
 <hr />
 <h1 class="font-weight-bold">Profile</h1>
@@ -13,126 +24,114 @@
 <br />
 <br />
 
+<div class="container" style="margin-bottom: 3rem;">
 
-<div class="container">
-
-
-    <dl class="dl-horizontal">
-        <div class="col-md-6">
-            <dt>
+    <div class="row table-striped">
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.FirstName)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.FirstName)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.LastName)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.LastName)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.StaffGender)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.StaffGender)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.Profession)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.Profession)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.StaffDepartment)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.StaffDepartment)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.DateOfBirth)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.DateOfBirth)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.Email)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.Email)
-            </dd>
+            </div>
         </div>
-
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.Address)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.Address)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.Phone)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.Phone)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.Username)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.Username)
-            </dd>
+            </div>
         </div>
-        <div class="col-md-6">
-            <dt>
+        <div class="col-md-12">
+            <div class="col-md-3 profile-header-color">
                 @Html.DisplayNameFor(model => model.Password)
-            </dt>
-
-            <dd>
+            </div>
+            <div class="col-md-9 profile-color">
                 @Html.DisplayFor(model => model.Password)
-            </dd>
-        </div>
-        <div class="col-md-6">
-            <dt>
-                @Html.DisplayNameFor(model => model.ConfirmPassword)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ConfirmPassword)
-            </dd>
+            </div>
         </div>
 
-    </dl>
 
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.StaffId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+    </div>
 
+   <br />
+
+   <p>
+       @* @Html.ActionLink("Edit", "EditStaff", new { id = Model.StaffId }) |*@
+
+
+       @{
+           var UserId = Session["StaffId"];
+           <a class="btn btn-info" href="/Account/EditStaff/@UserId" style="margin-left:2rem;"><i class="fa fa-edit mr-2"></i>Manage Profile</a>
+       }
+
+
+
+   </p>
 </div>

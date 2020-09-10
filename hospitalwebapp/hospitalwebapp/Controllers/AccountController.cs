@@ -4,10 +4,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
-
-
-//Add
+using System.Net.Mail;
+using MySmtpClassLib;
 using hospitalwebapp.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace hospitalwebapp.Controllers
 {
@@ -31,7 +31,7 @@ namespace hospitalwebapp.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Login", "Home");
+                        return RedirectToAction("Login", "Account");
                     }
                     
                 }
@@ -52,11 +52,105 @@ namespace hospitalwebapp.Controllers
             // Show a list of all registered Patients
             using (HospitalDbContext db = new HospitalDbContext())
             {
-                var user = db.PatientAccounts.ToList();
+                if (Session["StaffId"] != null)
+                {
+                    var user = db.PatientAccounts.ToList();
 
-                return View(user);
+                    return View(user);
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+               
             }
         }
+
+
+        //GET
+        public ActionResult Feedback()
+        {
+            ViewBag.Title = "Feedback";
+
+            return View();
+        }
+
+        //create a delete method
+        //-----------------------------------------------------------
+        //                      DELETE METHOD
+        //-----------------------------------------------------------
+        public void DeleteImage(String path)
+        {
+            var PathToDelete = Server.MapPath("/") + path;
+
+            if (System.IO.File.Exists(PathToDelete))
+            {
+                //delete the file in the path if file exists in the path
+
+                System.IO.File.Delete(PathToDelete);
+            }
+
+        }
+
+        //POST
+        [HttpPost]
+        public ActionResult Feedback(EmailModel email, HttpPostedFileBase UploadFile)
+        {
+
+            try
+            {
+
+                String MessageBody = email.Message;
+
+                using (MailMessage client = new MailMessage())
+                {
+                    client.From = new MailAddress(Connection.SenderEmail, Connection.SenderName);
+                    client.To.Add(email.UserEmail);
+                    client.Subject = Connection.MailSubject;
+                    client.Body = MessageBody;
+                    client.IsBodyHtml = true;
+                    client.Priority = MailPriority.High;
+
+                    //Check for File Uploads
+                    if (UploadFile != null)
+                    {
+                        var path = Server.MapPath("/") + "Content/uploads" + UploadFile.FileName;
+
+                        //Save image in the path
+
+                        UploadFile.SaveAs(path);
+                        client.Attachments.Add(new Attachment(path));
+                    }
+
+                    //Call the SMTP method we created in the class Library
+                    Connection.MySmtp(client);
+
+                }//Using closed here
+
+
+                //Delete file from server but first check if the file was uploaded, otherwise ignore
+                if (UploadFile != null)
+                {
+                    DeleteImage("Content/uploads" + UploadFile.FileName);
+                }
+
+
+                ViewBag.Feedback = "Message sent successfully.";
+                //Clear control
+                ModelState.Clear();
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.ErrorMessage = ex.Message;
+            }
+            return View();
+        }//End of Feedback
+
+
+
 
         //Get
         public ActionResult Registration()
@@ -64,6 +158,8 @@ namespace hospitalwebapp.Controllers
 
             return View();
         }
+
+
 
 
         //Staff Registration Action Method
@@ -154,8 +250,6 @@ namespace hospitalwebapp.Controllers
                         // Display notification to the user
                         ViewBag.Message = ($"{account.LastName} {account.FirstName}  Successfully Registered as Patient: {SelectedRegType}!");
 
-                        db.PatientAccounts.Add(account);
-                        db.SaveChanges();
                     }
                     else
                     {
@@ -168,27 +262,42 @@ namespace hospitalwebapp.Controllers
         }
 
 
-
+        //Get
         //View A Single Staff
         public ActionResult StaffProfile(int? id)
         {
 
-            if (id == null)
+            try
             {
-                return HttpNotFound();
+                if (id == null)
+                {
+                    /*return HttpNotFound();*/
+                    return RedirectToAction("Login", "Account");
+                }
+
+                //Search for the id in the collection 
+
+                if (Session["StaffId"] != null)
+                {
+                    using (HospitalDbContext db = new HospitalDbContext())
+                    {
+                        var staffAccount = db.StaffAccounts
+                            .Where(m => m.StaffId == id)
+                            .FirstOrDefault();
+
+                       
+                        return View(staffAccount);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
             }
-
-            //Search for the id in the collection 
-
-            using (HospitalDbContext db = new HospitalDbContext())
+            catch (Exception)
             {
-                var staffAccount = db.StaffAccounts
-                    .Where(m => m.StaffId == id)
-                    .FirstOrDefault();
-
                 
-                    return View(staffAccount);
-                
+                return RedirectToAction("Login", "Account"); 
             }
         }
 
@@ -203,13 +312,20 @@ namespace hospitalwebapp.Controllers
                 return HttpNotFound();
             }
 
-            using (HospitalDbContext db = new HospitalDbContext())
+            if(Session["StaffId"] != null)
             {
-                var staff = db.StaffAccounts
-                    .Where(row => row.StaffId == id)
-                    .FirstOrDefault();
+                using (HospitalDbContext db = new HospitalDbContext())
+                {
+                    var staff = db.StaffAccounts
+                        .Where(row => row.StaffId == id)
+                        .FirstOrDefault();
 
-                return View(staff);
+                    return View(staff);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
             }
         }
 
@@ -221,48 +337,53 @@ namespace hospitalwebapp.Controllers
         {
             try
             {
-                
+                if(Session["StaffId"] != null)
+                {
+                    //Search for the id in the collection 
+
+                    using (HospitalDbContext db = new HospitalDbContext())
+                    {
+                        if (staffAccount.StaffId > 0)
+                        {
+                            //Edit
+                            var staff = db.StaffAccounts
+                                .Where(m => m.StaffId == staffAccount.StaffId)
+                                .FirstOrDefault();
+                            if (staff != null)
+                            {
+                                staff.FirstName = staffAccount.FirstName;
+                                staff.LastName = staffAccount.LastName;
+                                staff.StaffGender = staffAccount.StaffGender;
+                                staff.Profession = staffAccount.Profession;
+                                staff.StaffDepartment = staffAccount.StaffDepartment;
+                                staff.DateOfBirth = staffAccount.DateOfBirth;
+                                staff.Email = staffAccount.Email;
+                                staff.Address = staffAccount.Address;
+                                staff.Phone = staffAccount.Phone;
+                                staff.Username = staffAccount.Username;
+                                staff.Password = staffAccount.Password;
+                                staff.ConfirmPassword = staffAccount.ConfirmPassword;
+                            }
+
+                        }
+                        else
+                        {
+                            //Save
+                            db.StaffAccounts.Add(staffAccount);
+
+                        }
+
+                        db.SaveChanges();
+                        return RedirectToAction("Index", "Account");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
 
                
-                //Search for the id in the collection 
-
-                using (HospitalDbContext db = new HospitalDbContext())
-                {
-                    if (staffAccount.StaffId > 0)
-                    {
-                        //Edit
-                        var staff = db.StaffAccounts
-                            .Where(m => m.StaffId == staffAccount.StaffId)
-                            .FirstOrDefault();
-                        if (staff != null)
-                        {
-                            staff.FirstName = staffAccount.FirstName;
-                            staff.LastName = staffAccount.LastName;
-                            staff.StaffGender = staffAccount.StaffGender;
-                            staff.Profession = staffAccount.Profession;
-                            staff.StaffDepartment = staffAccount.StaffDepartment;
-                            staff.DateOfBirth = staffAccount.DateOfBirth;
-                            staff.Email = staffAccount.Email;
-                            staff.Address = staffAccount.Address;
-                            staff.Phone = staffAccount.Phone;
-                            staff.Username = staffAccount.Username;
-                            staff.Password = staffAccount.Password;
-                            staff.ConfirmPassword = staffAccount.ConfirmPassword;
-
-                            
-                        }
-                        
-                    }
-                    else
-                    {
-                        //Save
-                        db.StaffAccounts.Add(staffAccount);
-                        
-                    }
-
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "Account");
-                }
+                
         
             }
             catch (Exception)
@@ -273,13 +394,291 @@ namespace hospitalwebapp.Controllers
             return View();
         }
 
+
+        // GET: Delete Staff in StaffAccount database
+        public ActionResult DeleteStaff(int? id)
+        {
+            try
+            {
+                //Search for the id in the collection 
+
+                if (id == null)
+                {
+                    return HttpNotFound();
+                }
+
+                if (Session["StaffId"] != null)
+                {
+                    using (HospitalDbContext db = new HospitalDbContext())
+                    {
+                        var staff = db.StaffAccounts
+                            .Where(row => row.StaffId == id)
+                            .FirstOrDefault();
+
+                        return View(staff);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.ErrorMessage = ex.Message;
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+        // POST: StaffAccounts/Delete/5
+        [HttpPost, ActionName("DeleteStaff")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmedDeleteStaff(int id)
+        {
+            try
+            {
+                if (Session["StaffId"] != null)
+                {
+                    using (HospitalDbContext db = new HospitalDbContext())
+                    {
+                        var staff = db.StaffAccounts
+                                .Where(row => row.StaffId == id)
+                                .FirstOrDefault();
+
+                        db.StaffAccounts.Remove(staff);
+                        db.SaveChanges();
+
+                        return RedirectToAction("Index", "Account");
+                    }
+
+                }
+                return RedirectToAction("Login", "Account");
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.ErrorMessage = ex.Message;
+                return RedirectToAction("Login", "Account");
+            }
+            
+        }
+
+       
+
+
+        //Get
+        //View A Single Patient
+        public ActionResult PatientProfile(int? id)
+        {
+
+            try
+            {
+                if (id == null)
+                {
+                    /*return HttpNotFound();*/
+                    return RedirectToAction("Login", "Account");
+                }
+
+                //Search for the id in the collection 
+
+                if (Session["StaffId"] != null || Session["PatientId"] != null)
+                {
+                    using (HospitalDbContext db = new HospitalDbContext())
+                    {
+                        var patient = db.PatientAccounts
+                            .Where(m => m.PatientId == id)
+                            .FirstOrDefault();
+
+
+                        return View(patient);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+
+        //Edit Patient
+        public ActionResult EditPatient(int? id)
+        {
+            //Search for the id in the collection 
+
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (Session["PatientId"] != null || Session["StaffId"] != null)
+            {
+                using (HospitalDbContext db = new HospitalDbContext())
+                {
+                    var patient = db.PatientAccounts
+                        .Where(row => row.PatientId == id)
+                        .FirstOrDefault();
+
+                    return View(patient);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //Edit Staff
+        public ActionResult EditPatient(PatientAccount patient)
+        {
+            try
+            {
+                if (Session["PatientId"] != null || Session["StaffId"] != null)
+                {
+                    //Search for the id in the collection 
+
+                    using (HospitalDbContext db = new HospitalDbContext())
+                    {
+                        if (patient.PatientId > 0)
+                        {
+                            //Edit
+                            var user = db.PatientAccounts
+                                .Where(m => m.PatientId == patient.PatientId)
+                                .FirstOrDefault();
+                            if (user != null)
+                            {
+                                user.FirstName = patient.FirstName;
+                                user.LastName = patient.LastName;
+                                user.PatientGender = patient.PatientGender;
+                                user.Profession = patient.Profession;
+                                user.Address = patient.Address;
+                                user.DateOfBirth = patient.DateOfBirth;
+                                user.Email = patient.Email;
+                                user.Phone = patient.Phone;
+                                user.Username = patient.Username;
+                                user.PatientRegistrationType = patient.PatientRegistrationType;
+                                user.Password = patient.Password;
+                                user.ConfirmPassword = patient.ConfirmPassword;
+                            }
+
+                            
+                        }
+                        else
+                        {
+                            //Save
+                            db.PatientAccounts.Add(patient);
+
+                        }
+
+                        db.SaveChanges();
+                        return RedirectToAction("HospitalPatients", "Account");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+
+
+
+
+            }
+            catch (Exception)
+            {
+
+                ViewBag.Error = "Invalid Patient Id! Changes was not successful.";
+            }
+            return RedirectToAction("Login", "Account");
+        }
+
+
+        // GET: Delete Patient in PatientAccount database. Note a patient is not granted access to perform this role
+        public ActionResult DeletePatientRecord(int? id)
+        {
+            try
+            {
+                //Search for the id in the collection 
+
+                if (id == null)
+                {
+                    return HttpNotFound();
+                }
+
+                if (Session["StaffId"] != null)
+                {
+                    using (HospitalDbContext db = new HospitalDbContext())
+                    {
+                        var patient = db.PatientAccounts
+                            .Where(row => row.PatientId == id)
+                            .FirstOrDefault();
+
+                        return View(patient);
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.ErrorMessage = ex.Message;
+                return RedirectToAction("Login", "Account");
+            }
+        }
+
+        // POST: StaffAccounts/Delete/5
+        [HttpPost, ActionName("DeletePatientRecord")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ConfirmedDeletePatientRecord(int id)
+        {
+            try
+            {
+                if (Session["StaffId"] != null)
+                {
+                    using (HospitalDbContext db = new HospitalDbContext())
+                    {
+                        var patient = db.PatientAccounts
+                                .Where(row => row.PatientId == id)
+                                .FirstOrDefault();
+
+                        db.PatientAccounts.Remove(patient);
+                        db.SaveChanges();
+
+                        return RedirectToAction("HospitalPatients", "Account");
+                    }
+
+                }
+                return RedirectToAction("Login", "Account");
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.ErrorMessage = ex.Message;
+                return RedirectToAction("Login", "Account");
+            }
+
+        }
+
+
         //Get
         public ActionResult Login()
         {
+
             return View();
         }
 
-  
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -296,11 +695,11 @@ namespace hospitalwebapp.Controllers
                     {
                         Session["StaffId"] = usr.StaffId.ToString();
                         Session["Username"] = usr.Username.ToString();
-                        /*Session["StaffDepartment"] = usr.StaffDepartment.ToString();*/
+                        Session["StaffDepartment"] = usr.StaffDepartment.ToString();
 
                         // Redirect user to their Respective Dashboards
                         //if user's department is Admin Redirect to the Admin Dashboard
-                        /*if (usr.StaffDepartment.ToString().Equals("Admin"))
+                       /* if (usr.StaffDepartment.ToString().Equals("Admin"))
                         {
                             return RedirectToAction("Index", "Admins");
                         }
@@ -339,18 +738,74 @@ namespace hospitalwebapp.Controllers
                     else
                     {
                         ModelState.AddModelError("", "Username or Password is Invalid!");
+
+                        return View();
                     }
                 }
-                return View();
+
             }
             catch (Exception)
             {
                 ViewBag.Error = $"Either username or Password is Invalid";
 
+                return View();
             }
-            return View();
-            
+
+
         }
+
+
+        //Get
+        public ActionResult PatientLogin()
+        {
+
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PatientLogin(PatientAccount user)
+        {
+
+            try
+            {
+                using (HospitalDbContext db = new HospitalDbContext())
+                {
+                    var patient = db.PatientAccounts.Single(u => u.Username == user.Username && u.Password == user.Password);
+               
+
+                if (patient != null)
+                    {
+                        Session["PatientId"] = patient.PatientId.ToString();
+                        Session["Username"] = patient.Username.ToString();
+                        Session["PatientRegistrationType"] = patient.PatientRegistrationType.ToString();
+
+
+                    return RedirectToAction($"PatientProfile/{Session["PatientId"]}", "Patient");
+                }
+
+              
+                else
+                    {
+                        ModelState.AddModelError("", "Username or Password is Invalid!");
+
+                        return View();
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                ViewBag.Error = $"Either username or Password is Invalid";
+
+                return View();
+            }
+
+
+        }
+
+
 
 
 
@@ -563,31 +1018,31 @@ namespace hospitalwebapp.Controllers
          }*/
 
 
-       /* //Login Session for Patients
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(PatientAccount user)
-        {
-            using (HospitalDbContext db = new HospitalDbContext())
-            {
-                var usr = db.PatientAccounts.Single(u => u.Username == user.Username && u.Password == user.Password);
+        /* //Login Session for Patients
+         [HttpPost]
+         [ValidateAntiForgeryToken]
+         public ActionResult Login(PatientAccount user)
+         {
+             using (HospitalDbContext db = new HospitalDbContext())
+             {
+                 var usr = db.PatientAccounts.Single(u => u.Username == user.Username && u.Password == user.Password);
 
-                if (usr != null)
-                {
-                    Session["PatientId"] = usr.PatientId.ToString();
-                    Session["Username"] = usr.Username.ToString();
+                 if (usr != null)
+                 {
+                     Session["PatientId"] = usr.PatientId.ToString();
+                     Session["Username"] = usr.Username.ToString();
 
-                    // Redirect user to the Patient Dashboard
-                    return RedirectToAction("Index", "PatientAccount");
+                     // Redirect user to the Patient Dashboard
+                     return RedirectToAction("Index", "PatientAccount");
 
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Username or Password is Invalid!");
-                }
-            }
-            return View();
-        }*/
+                 }
+                 else
+                 {
+                     ModelState.AddModelError("", "Username or Password is Invalid!");
+                 }
+             }
+             return View();
+         }*/
 
 
 
@@ -597,7 +1052,7 @@ namespace hospitalwebapp.Controllers
         {
             Session.Clear();
 
-            return RedirectToAction("Login","Home");
+            return RedirectToAction("Login");
 
 
         }

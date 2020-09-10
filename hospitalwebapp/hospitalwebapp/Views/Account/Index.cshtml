@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<hospitalwebapp.Models.StaffAccount>
 
+<hr />
 @if (Session["StaffId"] != null)
 {
 
@@ -21,11 +22,14 @@
         <br />
         <br />
 
-        <div class="table-responsive" style="font-size:1rem;">
+        <div class="table-responsive" style="font-size:0.8rem;">
             <table class="table table-striped table-active">
 
                 <tr style="background-color: rgba( 26, 63, 124, 0.7); color: white;">
 
+                    <th>
+                        @Html.DisplayNameFor(model => model.StaffId)
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstName)
                     </th>
@@ -63,47 +67,51 @@
                 @foreach (var item in Model)
                 {
                     var Id = item.StaffId;
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.LastName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StaffGender)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Profession)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StaffDepartment)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateOfBirth)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Phone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Username)
-                        </td>
-                        <td>
-                            @*@Html.ActionLink("Edit", "Edit", new { id = item.StaffId }) |
-                                @Html.ActionLink("Details", "Details", new { id = item.StaffId }) |
-                                @Html.ActionLink("Delete", "Delete", new { id = item.StaffId })*@
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffGender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Profession)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StaffDepartment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.StaffId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.StaffId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.StaffId })*@
 
-                            <a href="/Account/EditStaff/@Id" class="btn btn-success btn-small"><i class="fa fa-edit mr-2" aria-hidden="true"></i>Edit</a>
-                            <a href="/Account/ViewStaff/@Id" class="btn btn-primary btn-small"><i class="fa fa-eye mr-2" aria-hidden="true"></i>Details</a>
-                            <a href="/Account/DeleteStaff/@Id" class="btn btn-danger btn-small"><i class="fa fa-trash mr-2" aria-hidden="true"></i>Delete</a>
-                        </td>
-                    </tr>
+                    <a href="/Account/EditStaff/@Id" class="btn btn-success btn-small"><i class="fa fa-edit mr-1" aria-hidden="true"></i></a>
+                    <a href="/Account/StaffProfile/@Id" class="btn btn-primary btn-small"><i class="fa fa-eye mr-1" aria-hidden="true"></i></a>
+                    <a href="/Account/DeleteStaff/@Id" class="btn btn-danger btn-small"><i class="fa fa-trash mr-1" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+
                 }
 
             </table>

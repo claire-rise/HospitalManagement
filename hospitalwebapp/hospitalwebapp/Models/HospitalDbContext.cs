@@ -24,7 +24,7 @@ namespace hospitalwebapp.Models
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<LaboratoryTest> LaboratoryTests { get; set; }
         public DbSet<PatientTest> PatientTests { get; set; }
-       
 
+        public System.Data.Entity.DbSet<hospitalwebapp.Models.EmailModel> EmailModels { get; set; }
     }
 }
